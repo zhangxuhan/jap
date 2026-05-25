@@ -1,36 +1,38 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="ja">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>我的个人主页</title>
+  <title>地域防災・共助ネットワーク</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --primary: #4f7cff;
-      --primary-light: #e8eeff;
-      --bg: #f7f8fc;
+      --primary: #d84315;
+      --primary-light: #fbe9e7;
+      --accent: #2e7d32;
+      --accent-light: #e8f5e9;
+      --bg: #fafafa;
       --card: #ffffff;
-      --text: #1a1a2e;
-      --muted: #6b7280;
-      --border: #e5e7eb;
+      --text: #212121;
+      --muted: #757575;
+      --border: #e0e0e0;
       --radius: 14px;
     }
 
     body {
-      font-family: "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
+      font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", "Meiryo", sans-serif;
       background: var(--bg);
       color: var(--text);
-      line-height: 1.7;
+      line-height: 1.85;
     }
 
-    /* ── 导航 ── */
+    /* ── ナビゲーション ── */
     nav {
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(255,255,255,0.88);
+      background: rgba(255,255,255,0.92);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
       padding: 0 40px;
@@ -40,22 +42,22 @@
       height: 60px;
     }
     .nav-logo {
-      font-size: 18px;
-      font-weight: 600;
+      font-size: 16px;
+      font-weight: 700;
       color: var(--primary);
       text-decoration: none;
-      letter-spacing: 1px;
+      letter-spacing: 0.5px;
     }
-    .nav-links { display: flex; gap: 32px; }
+    .nav-links { display: flex; gap: 28px; }
     .nav-links a {
       text-decoration: none;
-      font-size: 14px;
+      font-size: 13px;
       color: var(--muted);
       transition: color .2s;
     }
     .nav-links a:hover { color: var(--primary); }
 
-    /* ── Hero ── */
+    /* ── ヒーロー ── */
     .hero {
       max-width: 860px;
       margin: 80px auto 60px;
@@ -65,36 +67,47 @@
       gap: 48px;
     }
     .hero-avatar {
-      width: 120px;
-      height: 120px;
+      width: 130px;
+      height: 130px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #4f7cff 0%, #a78bfa 100%);
+      background: linear-gradient(135deg, #d84315 0%, #ff7043 100%);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 48px;
+      font-size: 52px;
       flex-shrink: 0;
     }
-    .hero-text h1 { font-size: 32px; font-weight: 700; margin-bottom: 8px; }
-    .hero-text .subtitle { font-size: 16px; color: var(--muted); margin-bottom: 20px; }
+    .hero-text h1 { font-size: 30px; font-weight: 700; margin-bottom: 8px; letter-spacing: 1px; }
+    .hero-text .subtitle { font-size: 15px; color: var(--muted); margin-bottom: 20px; }
     .hero-tags { display: flex; flex-wrap: wrap; gap: 8px; }
     .tag {
       background: var(--primary-light);
       color: var(--primary);
       border-radius: 20px;
-      padding: 4px 14px;
+      padding: 5px 16px;
       font-size: 13px;
+      font-weight: 500;
+    }
+    .hero-alert {
+      margin-top: 18px;
+      background: #fff3e0;
+      border-left: 4px solid var(--primary);
+      border-radius: 6px;
+      padding: 10px 16px;
+      font-size: 13px;
+      color: #bf360c;
+      font-weight: 500;
     }
 
-    /* ── 通用 section ── */
+    /* ── 共通 section ── */
     section {
       max-width: 860px;
-      margin: 0 auto 60px;
+      margin: 0 auto 64px;
       padding: 0 24px;
     }
     .section-title {
       font-size: 20px;
-      font-weight: 600;
+      font-weight: 700;
       margin-bottom: 24px;
       display: flex;
       align-items: center;
@@ -107,46 +120,84 @@
       background: var(--border);
     }
 
-    /* ── 关于我 ── */
+    /* ── 防災とは ── */
     .about-card {
       background: var(--card);
       border-radius: var(--radius);
-      padding: 28px 32px;
+      padding: 30px 34px;
       border: 1px solid var(--border);
       font-size: 15px;
-      color: var(--muted);
-      line-height: 1.9;
+      color: #424242;
+      line-height: 2;
+    }
+    .highlight-box {
+      background: #fff3e0;
+      border-radius: 10px;
+      padding: 14px 20px;
+      margin-top: 16px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--primary);
     }
 
-    /* ── 技能 ── */
-    .skills-grid {
+    /* ── 自助・共助・公助 ── */
+    .principles-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-      gap: 14px;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
     }
-    .skill-card {
+    .principle-card {
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 18px 20px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
+      padding: 24px 22px;
+      text-align: center;
     }
-    .skill-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
+    .principle-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 20px;
+      font-size: 28px;
+      margin: 0 auto 14px;
+    }
+    .principle-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+    .principle-card p { font-size: 13px; color: var(--muted); line-height: 1.7; }
+
+    /* ── 地震時チェック ── */
+    .check-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+    .check-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .check-num {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      font-weight: 700;
       flex-shrink: 0;
     }
-    .skill-name { font-size: 14px; font-weight: 500; }
-    .skill-level { font-size: 12px; color: var(--muted); }
+    .check-card h4 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+    .check-card p { font-size: 13px; color: var(--muted); line-height: 1.6; }
 
-    /* ── 博客 ── */
+    /* ── ブログ ── */
     .blog-list { display: flex; flex-direction: column; gap: 16px; }
     .blog-card {
       background: var(--card);
@@ -166,7 +217,7 @@
       border-color: var(--primary);
       transform: translateY(-2px);
     }
-    .blog-card-info h3 { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+    .blog-card-info h3 { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
     .blog-card-info p { font-size: 13px; color: var(--muted); }
     .blog-card-meta { text-align: right; flex-shrink: 0; }
     .blog-date { font-size: 12px; color: var(--muted); }
@@ -177,35 +228,37 @@
       background: var(--primary-light);
       color: var(--primary);
       border-radius: 10px;
-      padding: 2px 10px;
+      padding: 3px 12px;
+      font-weight: 500;
     }
 
-    /* ── 相册 ── */
+    /* ── 備蓄品ギャラリー ── */
     .gallery {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
       gap: 12px;
     }
     .gallery-item {
       aspect-ratio: 1;
       border-radius: 12px;
-      overflow: hidden;
-      background: var(--primary-light);
+      background: var(--card);
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       font-size: 36px;
       border: 1px solid var(--border);
       transition: transform .2s;
       cursor: pointer;
+      gap: 6px;
     }
     .gallery-item:hover { transform: scale(1.03); }
-    .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
+    .gallery-item span { font-size: 12px; color: var(--muted); font-weight: 500; }
 
-    /* ── 联系 ── */
+    /* ── お問い合わせ ── */
     .contact-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 14px;
     }
     .contact-card {
@@ -222,191 +275,247 @@
     }
     .contact-card:hover { border-color: var(--primary); }
     .contact-icon { font-size: 24px; }
-    .contact-label { font-size: 13px; color: var(--muted); }
-    .contact-value { font-size: 14px; font-weight: 500; }
+    .contact-label { font-size: 12px; color: var(--muted); }
+    .contact-value { font-size: 14px; font-weight: 600; }
 
-    /* ── Footer ── */
+    /* ── フッター ── */
     footer {
       text-align: center;
       padding: 32px 24px;
       font-size: 13px;
       color: var(--muted);
       border-top: 1px solid var(--border);
+      background: var(--card);
     }
 
     @media (max-width: 600px) {
       .hero { flex-direction: column; text-align: center; gap: 24px; }
       .hero-tags { justify-content: center; }
-      nav { padding: 0 20px; }
-      .nav-links { gap: 18px; }
+      nav { padding: 0 16px; }
+      .nav-links { gap: 14px; overflow-x: auto; }
     }
   </style>
 </head>
 <body>
 
-<!-- 导航 -->
+<!-- ナビゲーション -->
 <nav>
-  <a class="nav-logo" href="#">✦ 我的主页</a>
+  <a class="nav-logo" href="#">⛑ 地域防災・共助ネット</a>
   <div class="nav-links">
-    <a href="#about">关于</a>
-    <a href="#skills">技能</a>
-    <a href="#blog">博客</a>
-    <a href="#gallery">相册</a>
-    <a href="#contact">联系</a>
+    <a href="#about">防災とは</a>
+    <a href="#principles">自助・共助・公助</a>
+    <a href="#check">地震時対応</a>
+    <a href="#blog">コラム</a>
+    <a href="#goods">備蓄品</a>
+    <a href="#contact">お問合せ</a>
   </div>
 </nav>
 
-<!-- Hero -->
+<!-- ヒーロー -->
 <div class="hero">
-  <div class="hero-avatar">🧑‍💻</div>
+  <div class="hero-avatar">🛟</div>
   <div class="hero-text">
-    <h1>你好，我是小明 👋</h1>
-    <p class="subtitle">在校大学生 · 热爱技术与生活</p>
+    <h1>地震発生時、地域の力で命を守る</h1>
+    <p class="subtitle">～ 共助の輪が、明日を変える ～</p>
     <div class="hero-tags">
-      <span class="tag">计算机专业</span>
-      <span class="tag">热爱游戏</span>
-      <span class="tag">摄影爱好者</span>
-      <span class="tag">在读本科</span>
+      <span class="tag">自助 70%</span>
+      <span class="tag">共助 20%</span>
+      <span class="tag">公助 10%</span>
+    </div>
+    <div class="hero-alert">
+      ⚠ 大地震の発生確率：今後30年以内に首都直下地震 約70%、南海トラフ地震 約80%
     </div>
   </div>
 </div>
 
-<!-- 关于我 -->
+<!-- 防災とは -->
 <section id="about">
-  <h2 class="section-title">关于我</h2>
+  <h2 class="section-title">🏠 地域防災・共助とは</h2>
   <div class="about-card">
-    <p>嗨！欢迎来到我的个人主页。我是一名计算机专业的在校大学生，平时喜欢研究新技术，也喜欢打游戏、拍照片。</p>
+    <p>大規模災害が発生したとき、消防や警察などの「公助」には限界があります。阪神・淡路大震災では、がれきの下から救出された人の約<strong>80%</strong>が、家族や近隣住民による「共助」によって助けられました。</p>
     <br />
-    <p>目前正在学习 Web 开发、数据库管理等课程，课余时间喜欢折腾各种有趣的项目，有时候也会在博客里写写自己的学习心得和生活感悟。</p>
-    <br />
-    <p>这个网站是我用来记录生活和学习的小角落，希望你看着顺眼 😄</p>
-  </div>
-</section>
-
-<!-- 技能 -->
-<section id="skills">
-  <h2 class="section-title">技能树</h2>
-  <div class="skills-grid">
-    <div class="skill-card">
-      <div class="skill-icon" style="background:#fff3e0;">🌐</div>
-      <div><div class="skill-name">HTML / CSS</div><div class="skill-level">熟练</div></div>
-    </div>
-    <div class="skill-card">
-      <div class="skill-icon" style="background:#e8f5e9;">☕</div>
-      <div><div class="skill-name">Java</div><div class="skill-level">掌握中</div></div>
-    </div>
-    <div class="skill-card">
-      <div class="skill-icon" style="background:#e8eeff;">🐍</div>
-      <div><div class="skill-name">Python</div><div class="skill-level">熟练</div></div>
-    </div>
-    <div class="skill-card">
-      <div class="skill-icon" style="background:#fce4ec;">🗃️</div>
-      <div><div class="skill-name">MySQL</div><div class="skill-level">掌握中</div></div>
-    </div>
-    <div class="skill-card">
-      <div class="skill-icon" style="background:#f3e5f5;">🐙</div>
-      <div><div class="skill-name">Git / GitHub</div><div class="skill-level">熟练</div></div>
-    </div>
-    <div class="skill-card">
-      <div class="skill-icon" style="background:#e0f7fa;">📷</div>
-      <div><div class="skill-name">摄影</div><div class="skill-level">业余爱好</div></div>
+    <p>共助とは、町内会や自治会、隣近所の人々がお互いに助け合うことです。日頃から顔の見える関係を築き、いざというときにすぐに行動できる体制を整えておくことが、命を守る鍵となります。</p>
+    <div class="highlight-box">
+      「災害時、最初の72時間が生死を分ける。その間、頼りになるのは隣のあなたです。」
     </div>
   </div>
 </section>
 
-<!-- 博客 -->
+<!-- 自助・共助・公助 -->
+<section id="principles">
+  <h2 class="section-title">🤝 自助・共助・公助</h2>
+  <div class="principles-grid">
+    <div class="principle-card">
+      <div class="principle-icon" style="background:#e8f5e9;">🏃</div>
+      <h3 style="color:#2e7d32;">自助</h3>
+      <p>自分自身と家族の安全を守るための備え。家具の固定、非常用持ち出し袋の準備、耐震補強など、<strong>まずは自分から</strong>。</p>
+    </div>
+    <div class="principle-card">
+      <div class="principle-icon" style="background:#fbe9e7;">🤲</div>
+      <h3 style="color:#d84315;">共助</h3>
+      <p>地域の隣人同士で助け合うこと。安否確認、救出活動、避難所運営、高齢者・要配慮者のサポートなど。<strong>地域の絆が命綱</strong>。</p>
+    </div>
+    <div class="principle-card">
+      <div class="principle-icon" style="background:#e3f2fd;">🚒</div>
+      <h3 style="color:#1565c0;">公助</h3>
+      <p>消防・警察・自衛隊などの公的機関による救助・支援活動。発災直後は到着に時間がかかることを前提に、自助・共助を徹底する。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 地震時対応チェックリスト -->
+<section id="check">
+  <h2 class="section-title">📋 地震発生！その時どうする？</h2>
+  <div class="check-grid">
+    <div class="check-card">
+      <div class="check-num">1</div>
+      <div>
+        <h4>まずは身の安全を確保</h4>
+        <p>机の下に隠れる。クッションなどで頭を守る。火の始末は揺れが収まってから。</p>
+      </div>
+    </div>
+    <div class="check-card">
+      <div class="check-num">2</div>
+      <div>
+        <h4>隣近所の安否確認</h4>
+        <p>「大丈夫ですか？」と声をかけ合う。高齢者や障害のある方のいる家を優先的に確認。</p>
+      </div>
+    </div>
+    <div class="check-card">
+      <div class="check-num">3</div>
+      <div>
+        <h4>逃げ道の確保</h4>
+        <p>ドアや窓を開けて出口を確保する。閉じ込められた場合、笛や大声で存在を知らせる。</p>
+      </div>
+    </div>
+    <div class="check-card">
+      <div class="check-num">4</div>
+      <div>
+        <h4>協力して救出活動</h4>
+        <p>複数人で声を掛け合いながら、がれきの下敷きになった人の救出を。無理は禁物。</p>
+      </div>
+    </div>
+    <div class="check-card">
+      <div class="check-num">5</div>
+      <div>
+        <h4>正しい情報の共有</h4>
+        <p>デマに惑わされず、ラジオや自治体の公式情報を確認。地域掲示板や口頭で正確に伝達。</p>
+      </div>
+    </div>
+    <div class="check-card">
+      <div class="check-num">6</div>
+      <div>
+        <h4>避難所での協力体制</h4>
+        <p>みんなで役割分担（炊き出し、清掃、高齢者ケア）。助け合いの精神が全ての基本。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ブログ／コラム -->
 <section id="blog">
-  <h2 class="section-title">最近文章</h2>
+  <h2 class="section-title">📝 防災コラム</h2>
   <div class="blog-list">
     <a class="blog-card" href="#">
       <div class="blog-card-info">
-        <h3>用 GitHub Pages 搭建我的第一个个人网站</h3>
-        <p>记录整个建站过程，从注册域名到部署上线，踩了哪些坑……</p>
+        <h3>なぜ共助が大切なのか ― 阪神・淡路大震災の教訓</h3>
+        <p>救出された人の8割は近隣住民によって助けられた。公助の限界と、地域の力の可能性を考える。</p>
       </div>
       <div class="blog-card-meta">
         <div class="blog-date">2026-05-25</div>
-        <div class="blog-tag">建站</div>
+        <div class="blog-tag">教訓</div>
       </div>
     </a>
     <a class="blog-card" href="#">
       <div class="blog-card-info">
-        <h3>大学第一年：那些让我印象深刻的瞬间</h3>
-        <p>开学、军训、第一次编程课，以及室友们带来的快乐……</p>
+        <h3>【実践編】町内会でできる防災訓練のススメ</h3>
+        <p>消火器訓練・AED講習・避難経路の確認。年に2回の定例訓練で、いざという時の動きを体に染み込ませる。</p>
       </div>
       <div class="blog-card-meta">
-        <div class="blog-date">2026-04-10</div>
-        <div class="blog-tag">生活</div>
+        <div class="blog-date">2026-04-15</div>
+        <div class="blog-tag">訓練</div>
       </div>
     </a>
     <a class="blog-card" href="#">
       <div class="blog-card-info">
-        <h3>Python 爬虫入门实战：抓取豆瓣电影 Top250</h3>
-        <p>手把手带你用 requests + BeautifulSoup 完成一个完整爬虫项目……</p>
+        <h3>高齢者・要配慮者をどう守るか ― 災害時要援護者台帳の活用</h3>
+        <p>地域で手助けが必要な人の情報を共有し、発災時に誰が誰を助けに行くかをあらかじめ決めておく。</p>
       </div>
       <div class="blog-card-meta">
-        <div class="blog-date">2026-03-18</div>
-        <div class="blog-tag">技术</div>
+        <div class="blog-date">2026-03-20</div>
+        <div class="blog-tag">福祉</div>
       </div>
     </a>
     <a class="blog-card" href="#">
       <div class="blog-card-info">
-        <h3>我最近在玩的几款游戏推荐</h3>
-        <p>不是测评，只是分享几款让我欲罢不能的游戏，以及喜欢它们的理由……</p>
+        <h3>地震直後にやるべきこと・やってはいけないこと</h3>
+        <p>エレベーター厳禁、ガスの元栓確認、むやみに動かない。命を守る10の鉄則を解説します。</p>
       </div>
       <div class="blog-card-meta">
-        <div class="blog-date">2026-02-20</div>
-        <div class="blog-tag">游戏</div>
+        <div class="blog-date">2026-02-10</div>
+        <div class="blog-tag">地震対策</div>
       </div>
     </a>
   </div>
 </section>
 
-<!-- 相册 -->
-<section id="gallery">
-  <h2 class="section-title">生活相册</h2>
+<!-- 防災グッズギャラリー -->
+<section id="goods">
+  <h2 class="section-title">🎒 非常用持ち出し品チェック</h2>
   <div class="gallery">
-    <div class="gallery-item">🌄</div>
-    <div class="gallery-item">🏙️</div>
-    <div class="gallery-item">🌸</div>
-    <div class="gallery-item">🎮</div>
-    <div class="gallery-item">📚</div>
-    <div class="gallery-item">☕</div>
-    <div class="gallery-item">🐱</div>
-    <div class="gallery-item">🌙</div>
+    <div class="gallery-item">💧<span>飲料水</span></div>
+    <div class="gallery-item">🍙<span>非常食</span></div>
+    <div class="gallery-item">🔦<span>懐中電灯</span></div>
+    <div class="gallery-item">📻<span>携帯ラジオ</span></div>
+    <div class="gallery-item">🩹<span>救急セット</span></div>
+    <div class="gallery-item">🧤<span>軍手</span></div>
+    <div class="gallery-item">🪪<span>身分証明書</span></div>
+    <div class="gallery-item">💊<span>常備薬</span></div>
+    <div class="gallery-item">📱<span>モバイルバッテリー</span></div>
+    <div class="gallery-item">🕯️<span>ろうそく</span></div>
+    <div class="gallery-item">🧻<span>ウェットティッシュ</span></div>
+    <div class="gallery-item">🪣<span>簡易トイレ</span></div>
   </div>
-  <p style="margin-top:14px;font-size:13px;color:var(--muted);">（把你的照片替换进来就好了！）</p>
+  <p style="margin-top:14px;font-size:13px;color:var(--muted);">※ 最低3日分、できれば1週間分の備蓄を推奨します。</p>
 </section>
 
-<!-- 联系方式 -->
+<!-- お問い合わせ -->
 <section id="contact">
-  <h2 class="section-title">联系我</h2>
+  <h2 class="section-title">📞 緊急連絡先・防災情報</h2>
   <div class="contact-grid">
-    <a class="contact-card" href="https://github.com/zhangxuhan" target="_blank">
-      <div class="contact-icon">🐙</div>
+    <a class="contact-card" href="https://www.jma.go.jp/" target="_blank">
+      <div class="contact-icon">🌊</div>
       <div>
-        <div class="contact-label">GitHub</div>
+        <div class="contact-label">気象庁</div>
+        <div class="contact-value">地震・津波情報</div>
+      </div>
+    </a>
+    <a class="contact-card" href="https://www.fdma.go.jp/" target="_blank">
+      <div class="contact-icon">🚒</div>
+      <div>
+        <div class="contact-label">消防庁</div>
+        <div class="contact-value">防災情報ページ</div>
+      </div>
+    </a>
+    <a class="contact-card" href="https://www.bousai.go.jp/" target="_blank">
+      <div class="contact-icon">🏛️</div>
+      <div>
+        <div class="contact-label">内閣府防災</div>
+        <div class="contact-value">防災情報の総合サイト</div>
+      </div>
+    </a>
+    <a class="contact-card" href="https://github.com/zhangxuhan" target="_blank">
+      <div class="contact-icon">💻</div>
+      <div>
+        <div class="contact-label">制作者</div>
         <div class="contact-value">github.com/zhangxuhan</div>
       </div>
     </a>
-    <a class="contact-card" href="mailto:example@qq.com">
-      <div class="contact-icon">📧</div>
-      <div>
-        <div class="contact-label">邮箱</div>
-        <div class="contact-value">example@qq.com</div>
-      </div>
-    </a>
-    <div class="contact-card">
-      <div class="contact-icon">💬</div>
-      <div>
-        <div class="contact-label">QQ</div>
-        <div class="contact-value">123456789</div>
-      </div>
-    </div>
   </div>
 </section>
 
 <footer>
-  <p>© 2026 小明的个人主页 · Made with ❤️ and GitHub Pages</p>
+  <p>© 2026 地域防災・共助ネットワーク  ｜  あなたの備えが、誰かの命を救う</p>
 </footer>
 
 </body>
