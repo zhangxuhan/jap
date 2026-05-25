@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>我的个人主页</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary: #4f7cff;
+      --primary-light: #e8eeff;
+      --bg: #f7f8fc;
+      --card: #ffffff;
+      --text: #1a1a2e;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --radius: 14px;
+    }
+
+    body {
+      font-family: "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    /* ── 导航 ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+    }
+    .nav-logo {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--primary);
+      text-decoration: none;
+      letter-spacing: 1px;
+    }
+    .nav-links { display: flex; gap: 32px; }
+    .nav-links a {
+      text-decoration: none;
+      font-size: 14px;
+      color: var(--muted);
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--primary); }
+
+    /* ── Hero ── */
+    .hero {
+      max-width: 860px;
+      margin: 80px auto 60px;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      gap: 48px;
+    }
+    .hero-avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #4f7cff 0%, #a78bfa 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+      flex-shrink: 0;
+    }
+    .hero-text h1 { font-size: 32px; font-weight: 700; margin-bottom: 8px; }
+    .hero-text .subtitle { font-size: 16px; color: var(--muted); margin-bottom: 20px; }
+    .hero-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tag {
+      background: var(--primary-light);
+      color: var(--primary);
+      border-radius: 20px;
+      padding: 4px 14px;
+      font-size: 13px;
+    }
+
+    /* ── 通用 section ── */
+    section {
+      max-width: 860px;
+      margin: 0 auto 60px;
+      padding: 0 24px;
+    }
+    .section-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-title::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── 关于我 ── */
+    .about-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 28px 32px;
+      border: 1px solid var(--border);
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.9;
+    }
+
+    /* ── 技能 ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 14px;
+    }
+    .skill-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .skill-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+    .skill-name { font-size: 14px; font-weight: 500; }
+    .skill-level { font-size: 12px; color: var(--muted); }
+
+    /* ── 博客 ── */
+    .blog-list { display: flex; flex-direction: column; gap: 16px; }
+    .blog-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px 26px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 24px;
+      cursor: pointer;
+      transition: border-color .2s, transform .15s;
+      text-decoration: none;
+      color: inherit;
+    }
+    .blog-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .blog-card-info h3 { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+    .blog-card-info p { font-size: 13px; color: var(--muted); }
+    .blog-card-meta { text-align: right; flex-shrink: 0; }
+    .blog-date { font-size: 12px; color: var(--muted); }
+    .blog-tag {
+      display: inline-block;
+      margin-top: 6px;
+      font-size: 11px;
+      background: var(--primary-light);
+      color: var(--primary);
+      border-radius: 10px;
+      padding: 2px 10px;
+    }
+
+    /* ── 相册 ── */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 12px;
+    }
+    .gallery-item {
+      aspect-ratio: 1;
+      border-radius: 12px;
+      overflow: hidden;
+      background: var(--primary-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      border: 1px solid var(--border);
+      transition: transform .2s;
+      cursor: pointer;
+    }
+    .gallery-item:hover { transform: scale(1.03); }
+    .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* ── 联系 ── */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 14px;
+    }
+    .contact-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      color: inherit;
+      transition: border-color .2s;
+    }
+    .contact-card:hover { border-color: var(--primary); }
+    .contact-icon { font-size: 24px; }
+    .contact-label { font-size: 13px; color: var(--muted); }
+    .contact-value { font-size: 14px; font-weight: 500; }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 32px 24px;
+      font-size: 13px;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+    }
+
+    @media (max-width: 600px) {
+      .hero { flex-direction: column; text-align: center; gap: 24px; }
+      .hero-tags { justify-content: center; }
+      nav { padding: 0 20px; }
+      .nav-links { gap: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- 导航 -->
+<nav>
+  <a class="nav-logo" href="#">✦ 我的主页</a>
+  <div class="nav-links">
+    <a href="#about">关于</a>
+    <a href="#skills">技能</a>
+    <a href="#blog">博客</a>
+    <a href="#gallery">相册</a>
+    <a href="#contact">联系</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-avatar">🧑‍💻</div>
+  <div class="hero-text">
+    <h1>你好，我是小明 👋</h1>
+    <p class="subtitle">在校大学生 · 热爱技术与生活</p>
+    <div class="hero-tags">
+      <span class="tag">计算机专业</span>
+      <span class="tag">热爱游戏</span>
+      <span class="tag">摄影爱好者</span>
+      <span class="tag">在读本科</span>
+    </div>
+  </div>
+</div>
+
+<!-- 关于我 -->
+<section id="about">
+  <h2 class="section-title">关于我</h2>
+  <div class="about-card">
+    <p>嗨！欢迎来到我的个人主页。我是一名计算机专业的在校大学生，平时喜欢研究新技术，也喜欢打游戏、拍照片。</p>
+    <br />
+    <p>目前正在学习 Web 开发、数据库管理等课程，课余时间喜欢折腾各种有趣的项目，有时候也会在博客里写写自己的学习心得和生活感悟。</p>
+    <br />
+    <p>这个网站是我用来记录生活和学习的小角落，希望你看着顺眼 😄</p>
+  </div>
+</section>
+
+<!-- 技能 -->
+<section id="skills">
+  <h2 class="section-title">技能树</h2>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="skill-icon" style="background:#fff3e0;">🌐</div>
+      <div><div class="skill-name">HTML / CSS</div><div class="skill-level">熟练</div></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon" style="background:#e8f5e9;">☕</div>
+      <div><div class="skill-name">Java</div><div class="skill-level">掌握中</div></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon" style="background:#e8eeff;">🐍</div>
+      <div><div class="skill-name">Python</div><div class="skill-level">熟练</div></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon" style="background:#fce4ec;">🗃️</div>
+      <div><div class="skill-name">MySQL</div><div class="skill-level">掌握中</div></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon" style="background:#f3e5f5;">🐙</div>
+      <div><div class="skill-name">Git / GitHub</div><div class="skill-level">熟练</div></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon" style="background:#e0f7fa;">📷</div>
+      <div><div class="skill-name">摄影</div><div class="skill-level">业余爱好</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 博客 -->
+<section id="blog">
+  <h2 class="section-title">最近文章</h2>
+  <div class="blog-list">
+    <a class="blog-card" href="#">
+      <div class="blog-card-info">
+        <h3>用 GitHub Pages 搭建我的第一个个人网站</h3>
+        <p>记录整个建站过程，从注册域名到部署上线，踩了哪些坑……</p>
+      </div>
+      <div class="blog-card-meta">
+        <div class="blog-date">2026-05-25</div>
+        <div class="blog-tag">建站</div>
+      </div>
+    </a>
+    <a class="blog-card" href="#">
+      <div class="blog-card-info">
+        <h3>大学第一年：那些让我印象深刻的瞬间</h3>
+        <p>开学、军训、第一次编程课，以及室友们带来的快乐……</p>
+      </div>
+      <div class="blog-card-meta">
+        <div class="blog-date">2026-04-10</div>
+        <div class="blog-tag">生活</div>
+      </div>
+    </a>
+    <a class="blog-card" href="#">
+      <div class="blog-card-info">
+        <h3>Python 爬虫入门实战：抓取豆瓣电影 Top250</h3>
+        <p>手把手带你用 requests + BeautifulSoup 完成一个完整爬虫项目……</p>
+      </div>
+      <div class="blog-card-meta">
+        <div class="blog-date">2026-03-18</div>
+        <div class="blog-tag">技术</div>
+      </div>
+    </a>
+    <a class="blog-card" href="#">
+      <div class="blog-card-info">
+        <h3>我最近在玩的几款游戏推荐</h3>
+        <p>不是测评，只是分享几款让我欲罢不能的游戏，以及喜欢它们的理由……</p>
+      </div>
+      <div class="blog-card-meta">
+        <div class="blog-date">2026-02-20</div>
+        <div class="blog-tag">游戏</div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- 相册 -->
+<section id="gallery">
+  <h2 class="section-title">生活相册</h2>
+  <div class="gallery">
+    <div class="gallery-item">🌄</div>
+    <div class="gallery-item">🏙️</div>
+    <div class="gallery-item">🌸</div>
+    <div class="gallery-item">🎮</div>
+    <div class="gallery-item">📚</div>
+    <div class="gallery-item">☕</div>
+    <div class="gallery-item">🐱</div>
+    <div class="gallery-item">🌙</div>
+  </div>
+  <p style="margin-top:14px;font-size:13px;color:var(--muted);">（把你的照片替换进来就好了！）</p>
+</section>
+
+<!-- 联系方式 -->
+<section id="contact">
+  <h2 class="section-title">联系我</h2>
+  <div class="contact-grid">
+    <a class="contact-card" href="https://github.com/zhangxuhan" target="_blank">
+      <div class="contact-icon">🐙</div>
+      <div>
+        <div class="contact-label">GitHub</div>
+        <div class="contact-value">github.com/zhangxuhan</div>
+      </div>
+    </a>
+    <a class="contact-card" href="mailto:example@qq.com">
+      <div class="contact-icon">📧</div>
+      <div>
+        <div class="contact-label">邮箱</div>
+        <div class="contact-value">example@qq.com</div>
+      </div>
+    </a>
+    <div class="contact-card">
+      <div class="contact-icon">💬</div>
+      <div>
+        <div class="contact-label">QQ</div>
+        <div class="contact-value">123456789</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 小明的个人主页 · Made with ❤️ and GitHub Pages</p>
+</footer>
+
+</body>
+</html>
